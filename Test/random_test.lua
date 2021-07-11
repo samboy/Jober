@@ -29,11 +29,3 @@ function testRandom()
   end
   return false
 end
-
-result = testRandom()
-if result then
-  print("testRandom() FAIL: ",result)
-else
-  print("testRandom() PASS")
-end
-
