@@ -7,7 +7,9 @@ to generate random Civilization 4 maps.
 
 # License
 
-To the extent possible, the code is public domain.
+To the extent possible, the code is, unless stated otherwise, public domain.
+
+Files in the `lunacy` folder are released under a MIT license.
 
 Pieces which implement the Civilization IV API may need to use pieces
 of Civilization IV code to correctly make Civ4 maps.  This is allowed
