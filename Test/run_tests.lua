@@ -10,14 +10,17 @@ require("random_test")
 -- Scaffolding
 function softWarning(test,name)
   local result = test()
+  local out = ""
+  local isWarning = false
   if result then
-    print(name .. " WARNING: " .. result)
+    out = name .. " WARNING: " .. result
+    isError = true
   else
-    print("testRandom() PASS")
+    out = "testRandom() PASS"
   end
-  return false
+  return {out, isWarning}
 end
 
 -- non-fatal tests
-softWarning(testRandom,"testRandom()")
+print(softWarning(testRandom,"testRandom()")[1])
 
