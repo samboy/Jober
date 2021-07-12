@@ -72,12 +72,12 @@ An ASCII diagram:
 # WRAPY
 
 This is the opposite of the `WRAPX` map option: The west edge and
-the east edge can not be crossed, but going north at the noth edge
+the east edge can not be crossed, but going north at the north edge
 puts one on the south edge of the map, and going south at the south
 edge puts one on the north edge of the map.
 
 This wrap option is sometimes called a “Uranus” map, since Uranus 
-spins north-to-south.
+spins vertically.
 
 An ASCII diagram:
 
@@ -109,6 +109,7 @@ An semisphere map must have an even X size.
 An ASCII diagram:
 
 ```
+34 44 54 64 14 24 34 44
 35 45 55 65 15 25 35 45 
 65 15 25 35 45 55 65 15
 64 14 24 34 44 54 64 14
@@ -116,6 +117,7 @@ An ASCII diagram:
 62 12 22 32 42 52 62 12
 61 11 21 31 41 51 61 11
 31 41 51 61 11 21 31 41
+32 42 52 62 12 22 32 42
 ```
 
 Note that, if this wrapping option were to be played in a game, once
@@ -124,3 +126,34 @@ flipped mirror image of the map until one crossed a pole again (or the
 game may, after one crosses a pole, tell the player they have crossed a
 pole and teleport them back to a non-flipped version of the map).
 
+This topological space locally resembles Euclidean (normal) space at
+each point: All points on the map are squares which allow movement 
+in eight directions.
+
+# Other possible spaces
+
+It would be possible to make a semi-Uranus wrap option, where north-south
+wrap, but going to the east or west edge would place one elsewhere
+on the east/west edge; this optional would locally resemble Euclidean
+space at all points of the map.  This has not been implemented.
+
+Likewise, a semi-sphere or semi-Uranus map where it’s not possible
+to go past the west or east edge (north/south with the Uranus version)
+could also be, but has not been, implemented.
+
+It’s not possible to make a semi-sphere variant where we go back to a
+different place on the same edge for all four edges without making the
+map non-Euclidean at the corners of the map.  Since going diagonally NW
+at the top left is not defined, we would have to forbid a single diagonal
+move at this location; the same is true for the other three corners of the
+map. The map would have four special squares (one for each corner) which 
+act differently than other locations on the map.
+
+# Tiling a sphere
+
+As it turns out, it’s not possible to tile a sphere such that each tile is
+locally Euclidean.  The standard geodisk tilings would *mainly* be hexagons,
+but the tiling would need to have (choose one) four triangles, eight squares,
+or 12 pentagons.  Other ways of simulating a sphere are possible, but
+remain non-Euclidean at some point; e.g. having the map on a cube has 24
+squares with non-Euclidean behavior (three squares at each corner).
