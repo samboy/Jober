@@ -62,6 +62,9 @@ function createGridMap(sizeX, sizeY, wrap)
   end
   sizeX = math.floor(tonumber(sizeX))
   sizeY = math.floor(tonumber(sizeY))
+  if wrap == "SEMISPHERE" and sizeX % 2 ~= 0 then
+    return {ERROR = "Semisphere maps must have an even X size"}
+  end
   if sizeX < 8 then sizeX = 8 end
   if sizeY < 8 then sizeY = 8 end
 
