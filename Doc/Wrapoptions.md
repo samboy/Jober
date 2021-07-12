@@ -101,7 +101,7 @@ and `WRAPX` maps.
 
 The north edge can be crossed, but when one crosses the north edge,
 they end up halfway across the world on the north edge.  This is
-a reasonble simulation of crossing the north pole.  The south edge works
+a reasonable simulation of crossing the north pole.  The south edge works
 the same way.
 
 An semisphere map must have an even X size.
