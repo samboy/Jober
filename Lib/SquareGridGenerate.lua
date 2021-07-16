@@ -74,7 +74,10 @@ function SquareGridMap:new(sizeX, sizeY, wrap, diagonalDistance)
   -- around 1.41421, but Civilization games make it 1 to make game play
   -- simpler.  C-evo aims for more realism and makes the value 1.5.
   if not diagonalDistance then
-    diagonalDistance = 1
+    -- We add a tiny value to the diagonal distance so that the path finder
+    -- will not zig zag back and forth diagonally from one point to another
+    -- but will prefer straight line paths.
+    diagonalDistance = 1.0001
   end
   sizeX = math.floor(tonumber(sizeX))
   sizeY = math.floor(tonumber(sizeY))
