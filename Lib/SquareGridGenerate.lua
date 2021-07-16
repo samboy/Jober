@@ -1,7 +1,16 @@
+
+
 -- This library generates a blank X*Y square grid map for JoberGen
 -- Each node only has adjacent nodes listed
+--
+-- This is a derived class of MapMeta (an "abstract class")
 
-function createGridMap(sizeX, sizeY, wrap)
+require("GenerateParent")
+SquareGridMap = {}
+SquareGridMap.__index = SquareGridMap
+setmetatable(SquareGridMap, MapMeta)
+
+function SquareGridMap:new(sizeX, sizeY, wrap, diagonalDistance)
   -- Given an X, Y coordinate, return the name we assign this map point
   function nodeName(X, Y)
     return "x" .. tonumber(X) .. "y" .. tonumber(Y)
@@ -60,6 +69,13 @@ function createGridMap(sizeX, sizeY, wrap)
      wrap ~= "SEMISPHERE" then
     return {ERROR = "Invalid wrap value"}
   end
+  -- If we do not specify how many movement "units" it takes to move
+  -- in a diagonal direction, use 1.  The correct value is 2 ^ .5, i.e.
+  -- around 1.41421, but Civilization games make it 1 to make game play
+  -- simpler.  C-evo aims for more realism and makes the value 1.5.
+  if not diagonalDistance then
+    diagonalDistance = 1
+  end
   sizeX = math.floor(tonumber(sizeX))
   sizeY = math.floor(tonumber(sizeY))
   if wrap == "SEMISPHERE" and sizeX % 2 ~= 0 then
@@ -70,7 +86,8 @@ function createGridMap(sizeX, sizeY, wrap)
 
   -- As a convention, lower case/numeric is node name, UPPER CASE is meta
   -- information about the map
-  local newMap = {ROOT = "x0y0", WRAP = wrap}
+  local newMap = {ROOT = "x0y0", WRAP = wrap, sizeX = sizeX,
+                  sizeY = sizeY, distanceMap = nil}
 
   for X = 0, (sizeX - 1) do
     for Y = 0, (sizeY - 1) do
@@ -85,12 +102,19 @@ function createGridMap(sizeX, sizeY, wrap)
 	    placeX, placeY = handleSemisphere(X+dirX, Y+dirY, sizeX, sizeY)
 	  end
 	  if placeX and placeY and (dirX ~= 0 or dirY ~= 0) then
-	    node.adjacent[#node.adjacent + 1] = nodeName(placeX,placeY)
+	    local distance = 1
+	    if dirX ~= 0 and dirY ~= 0 then
+	      distance = diagonalDistance
+	    end
+	    node.adjacent[#node.adjacent + 1] = {
+	      nodeName(placeX,placeY), 
+	      distance
+	    }
 	  end
 	end
       end
       newMap[nodeName(X,Y)] = node
     end
   end
-  return newMap
+  return setmetatable(newMap, self)
 end
