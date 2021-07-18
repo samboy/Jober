@@ -4,7 +4,8 @@ MapMeta = {}
 MapMeta.__index = GridMeta
 
 function MapMeta:new()
-  return setmetatable({DistanceMap = nil, ROOT = nil}, self)
+  return setmetatable({DistanceMap = false, ROOT = false, NODES = false}, 
+                      self)
 end
 
 function MapMeta:distance()

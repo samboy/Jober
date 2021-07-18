@@ -90,7 +90,7 @@ function SquareGridMap:new(sizeX, sizeY, wrap, diagonalDistance)
   -- As a convention, lower case/numeric is node name, UPPER CASE is meta
   -- information about the map
   local newMap = {ROOT = "x0y0", WRAP = wrap, SizeX = sizeX,
-                  SizeY = sizeY, DistanceMap = nil}
+                  SizeY = sizeY, NODES = sizeX * sizeY, DistanceMap = nil}
 
   for X = 0, (sizeX - 1) do
     for Y = 0, (sizeY - 1) do
