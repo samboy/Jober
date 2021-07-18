@@ -31,8 +31,10 @@ function MapMeta:distance()
       dmap[neighbor] = self[view]["adjacent"][a][2]
 
       if not self.DistanceMap[node][neighbor] then
-        self.DistanceMap[node][neighbor] = 
-            distance + self.DistanceMap[node][self[view]["adjacent"][a][2]]
+        self.DistanceMap[node][neighbor] = {}
+        self.DistanceMap[node][neighbor][1] = distance + 
+	    self.DistanceMap[node][neighbor]
+        self.DistanceMap[node][neighbor][2] = neighbor	
 	out[#out + 1] = neighbor
       end
     end
