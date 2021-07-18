@@ -15,7 +15,7 @@ function MapMeta:distance()
   -- Note: This alters the list of adjacent nodes by sorting them by
   -- the distance they have from a neighbor.
   -- Namespace: MapMeta:distance()
-  function distanceMapOneAway(node, view, distance) 
+  function distanceMapOneAway(node, view, distance, firstNeighbor) 
     local out = {}
     local dmap = {}
     if not self[view] then return false end
@@ -26,15 +26,19 @@ function MapMeta:distance()
 
     for a = 1,#self[view]["adjacent"] do
       local neighbor = self[view]["adjacent"][a][1]
+      local first = firstNeighbor
+      if not first then first = neighbor end
 
       -- Note the distance from one node to another
       dmap[neighbor] = self[view]["adjacent"][a][2]
 
       if not self.DistanceMap[node][neighbor] then
         self.DistanceMap[node][neighbor] = {}
+	-- Element 1: Distance
         self.DistanceMap[node][neighbor][1] = distance + 
 	    self.DistanceMap[node][neighbor]
-        self.DistanceMap[node][neighbor][2] = neighbor	
+	-- Element 2: First step on path to destination node
+        self.DistanceMap[node][neighbor][2] = first
 	out[#out + 1] = neighbor
       end
     end
