@@ -92,8 +92,10 @@ function SquareGridMap:new(sizeX, sizeY, wrap, diagonalDistance)
   local newMap = {ROOT = "x0y0", WRAP = wrap, SizeX = sizeX,
                   SizeY = sizeY, NODES = sizeX * sizeY, DistanceMap = nil}
 
+  lastNode = nil
   for X = 0, (sizeX - 1) do
     for Y = 0, (sizeY - 1) do
+      if lastNode then lastNode.next = nodeName(X,Y) end -- For iterators
       local node = {name = nodeName(X,Y), X = X, Y = Y}
       node.adjacent = {}
       for dirX = -1, 1 do
@@ -117,6 +119,7 @@ function SquareGridMap:new(sizeX, sizeY, wrap, diagonalDistance)
 	end
       end
       newMap[nodeName(X,Y)] = node
+      lastNode = node
     end
   end
   return setmetatable(newMap, self)

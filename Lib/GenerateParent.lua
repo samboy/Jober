@@ -23,7 +23,7 @@ function MapMeta:distance()
     if not self[view]["adjacent"] then return false end    
 
     -- Make sure we add closer neighbors before adding further neighbors
-    table.sort(self[view]["adjacent"], function(y,z) y[2] < z[2] end)
+    table.sort(self[view]["adjacent"], function(y,z) return y[2] < z[2] end)
 
     for a = 1,#self[view]["adjacent"] do
       local neighbor = self[view]["adjacent"][a][1]
