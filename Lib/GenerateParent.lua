@@ -12,11 +12,18 @@ function MapMeta:distance()
 
   -- This function only fills in the distances one away, but it returns
   -- a list of nodes to fill out next
+  -- Note: This alters the list of adjacent nodes by sorting them by
+  -- the distance they have from a neighbor.
+  -- Namespace: MapMeta:distance()
   function distanceMapOneAway(node, view, distance) 
     local out = {}
     local dmap = {}
     if not self[view] then return false end
     if not self[view]["adjacent"] then return false end    
+
+    -- Make sure we add closer neighbors before adding further neighbors
+    table.sort(self[view]["adjacent"], function(y,z) y[2] < z[2] end)
+
     for a = 1,#self[view]["adjacent"] do
       local neighbor = self[view]["adjacent"][a][1]
 
@@ -32,9 +39,9 @@ function MapMeta:distance()
 
     -- To avoid longer "zig zag" paths, we want to have the shortest paths
     -- first in the output table
-    table.sort(out, function(a, b) return dmap[a] < dmap[b] end)
+    table.sort(out, function(y,z) return dmap[y] < dmap[z] end)
 
     return out
-  end -- distanceMapOneNode()
+  end -- distanceMapOneAway()
 
 end
