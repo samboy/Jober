@@ -1,3 +1,13 @@
+There are three copyrights in this directory:
+
+* The Lua copyright, present in this file
+* The luafilesystem (lfs) copyright, present in this file
+* The bitlib (bit32 port) copyright, in README.bitlib
+
+In all cases, the files are available under a permissive Lua license.
+
+-------------------------------------------------------------------------
+
 Lua License
 -----------
 
